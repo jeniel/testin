@@ -1,0 +1,118 @@
+
+appName: zkteco-middleware
+replicaCount: 1
+
+namespace: zteco_middleware
+
+image:
+    name: jeniel/testingonly
+    tag: "1.0"
+
+host: tk.192.168.254.130.nip.io
+
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.appName }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.appName }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.appName }}
+    spec:
+      imagePullSecrets:
+        - name: {{ .Values.appName }}-secret
+      containers:
+        - name: {{ .Values.appName }}
+          image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
+          ports:
+            - containerPort: 4000
+          env:
+            - name: TIMEZONE
+              value: "Asia/Manila"
+            - name: DEVICE_IP
+              values: "192.168.254.200"
+            - name: DEVICE_PORT
+              values: "4370"
+
+
+
+
+
+
+     #     {{- if (.Values.onPrem | default false) }}
+     #     volumeMounts:
+     #       - name:
+     #         mountPath:   # ← Change this to YOUR public directory
+     #         subPath:
+     #         readOnly:
+   #       {{- end }}
+  #    {{- if (.Values.onPrem | default false) }}
+  #    volumes:
+  #      - name:
+  #        secret:
+  #          secretName:
+  #          defaultMode:
+ #     {{- end }}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.appName }}
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.appName }}
+spec:
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 4000
+      targetPort: 4000
+      name: {{ .Values.appName }}
+  selector:
+    app: {{ .Values.appName }}
+
+
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespace }}
+
+
+
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.namespace }}
+ubuntuserver@ubuntuserver:~/zkteco_middleware/zkteco-middleware/templates$ cat ingress.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ .Values.appName }}-ingress
+  namespace: {{ .Values.namespace }}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  ingressClassName: nginx
+  rules:
+    - host: {{ .Values.host }}
+      http:
+        paths:
+          - path: "/"
+            pathType: Prefix
+            backend:
+              service:
+                name:  {{ .Values.appName }}
+                port:
+                  number: 4000
