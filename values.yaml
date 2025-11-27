@@ -7,4 +7,4 @@ image:
     name: jeniel/testingonly
     tag: "1.0"
 
-host: tk.192.168.254.130.nip.io
+host: tk.192.168.254.136.nip.io
