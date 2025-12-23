@@ -23,25 +23,3 @@ spec:
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 4000
-  #        env:
-  #          - name: TIMEZONE
-  #            value: "Asia/Manila"
-  #          - name: DEVICE_IP
-  #            values: "192.168.254.200"
-  #          - name: DEVICE_PORT
-  #            values: "4370"
-
-     #     {{- if (.Values.onPrem | default false) }}
-     #     volumeMounts:
-     #       - name:
-     #         mountPath:   # ← Change this to YOUR public directory
-     #         subPath:
-     #         readOnly:
-   #       {{- end }}
-  #    {{- if (.Values.onPrem | default false) }}
-  #    volumes:
-  #      - name:
-  #        secret:
-  #          secretName:
-  #          defaultMode:
- #     {{- end }}
