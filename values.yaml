@@ -1,7 +1,7 @@
 appName: zkteco-middleware
 replicaCount: 1
 
-namespace: zteco-middleware
+namespace: zkteco-middleware
 
 image:
     name: jeniel/testingonly
