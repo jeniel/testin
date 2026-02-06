@@ -5,7 +5,7 @@ namespace: zkteco-middleware
 
 image:
     name: acemcbmis/zkt-middleware
-    tag: 8799dbe-prod
+    tag: 9e3a382-prod
 
 #host: tk.192.168.254.160.nip.io
 host: zk.bata.local
