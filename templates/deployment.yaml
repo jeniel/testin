@@ -1,13 +1,10 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ .Values.appName }}
   namespace: {{ .Values.namespace }}
-  labels:
-    app: {{ .Values.appName }}
 spec:
-  replicas: {{ .Values.replicaCount }}
+  replicas: 1
   selector:
     matchLabels:
       app: {{ .Values.appName }}
@@ -16,10 +13,32 @@ spec:
       labels:
         app: {{ .Values.appName }}
     spec:
+      hostNetwork: true
+      dnsPolicy: Default
       imagePullSecrets:
         - name: {{ .Values.appName }}-secret
+
       containers:
         - name: {{ .Values.appName }}
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 4000
+
+          # Env for Python
+          env:
+            - name: TZ
+              value: "Asia/Manila"
+            - name: DEVICE_IP
+              value: ""
+            - name: DEVICE_PORT
+              value: "4370"
+
+          # Use entrypoint script to force Manila timezone
+          command: ["/entrypoint.sh"]
+          args: ["python", "zktime_server.py"]
+
+          securityContext:
+            runAsUser: 0
+            capabilities:
+              add:
+                - NET_RAW
