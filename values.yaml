@@ -7,5 +7,5 @@ image:
     name: acemcbmis/zkt-middleware
     tag: 8799dbe-prod
 
-#host: tk.192.168.254.136.nip.io
+#host: tk.192.168.254.160.nip.io
 host: zk.bata.local
