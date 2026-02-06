@@ -4,7 +4,7 @@ replicaCount: 2
 namespace: zkteco-middleware
 
 image:
-    name: acemcbmis/zkt-middleware
+    name: jeniel/zkt-middleware
     tag: 13bf37a-prod
 
 #host: tk.192.168.254.160.nip.io
