@@ -14,7 +14,8 @@ spec:
         app: {{ .Values.appName }}
     spec:
       hostNetwork: true
-      dnsPolicy: Default
+      dnsPolicy: ClusterFirstWithHostNet
+
       imagePullSecrets:
         - name: {{ .Values.appName }}-secret
 
@@ -24,21 +25,19 @@ spec:
           ports:
             - containerPort: 4000
 
-          # Env for Python
           env:
             - name: TZ
               value: "Asia/Manila"
+            - name: LANG
+              value: "C"
+            - name: LC_ALL
+              value: "C"
             - name: DEVICE_IP
-              value: ""
+              value: "192.168.1.195"
             - name: DEVICE_PORT
               value: "4370"
 
-          # Use entrypoint script to force Manila timezone
-          command: ["/entrypoint.sh"]
-          args: ["python", "zktime_server.py"]
-
           securityContext:
-            runAsUser: 0
             capabilities:
               add:
                 - NET_RAW
