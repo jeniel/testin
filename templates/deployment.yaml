@@ -13,9 +13,11 @@ spec:
       labels:
         app: {{ .Values.appName }}
     spec:
+      # Use host networking if you want direct device access
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
 
+      # Image pull secrets if your registry requires auth
       imagePullSecrets:
         - name: {{ .Values.appName }}-secret
 
@@ -24,6 +26,7 @@ spec:
           image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
           ports:
             - containerPort: 4000
+              protocol: TCP
 
           env:
             - name: TZ
@@ -37,7 +40,27 @@ spec:
             - name: DEVICE_PORT
               value: "4370"
 
+          # Security context to allow ping inside container
           securityContext:
             capabilities:
               add:
                 - NET_RAW
+
+          # Liveness and readiness probes (optional but recommended)
+          livenessProbe:
+            httpGet:
+              path: /ping-test?ip=192.168.1.195
+              port: 4000
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /ping-test?ip=192.168.1.195
+              port: 4000
+            initialDelaySeconds: 5
+            periodSeconds: 15
+            timeoutSeconds: 3
+            failureThreshold: 3
