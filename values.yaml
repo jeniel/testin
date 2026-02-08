@@ -5,7 +5,7 @@ namespace: zkteco-middleware
 
 image:
     name: jeniel/zkt-middleware
-    tag:  c4de79c-prod
+    tag: c4de79c-prod
 
 #host: tk.192.168.254.160.nip.io
 host: zk.bata.local
