@@ -13,9 +13,9 @@ spec:
       labels:
         app: {{ .Values.appName }}
     spec:
-      # Use host networking if you want direct device access
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
+      # ✅ Remove hostNetwork to avoid port conflict
+      # hostNetwork: true
+      # dnsPolicy: ClusterFirstWithHostNet
 
       # Image pull secrets if your registry requires auth
       imagePullSecrets:
