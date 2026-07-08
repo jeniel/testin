@@ -9,10 +9,7 @@ spec:
   type: ClusterIP
   ports:
     - protocol: TCP
-      port: 4000
-      targetPort: 4000
-     # nodePort: 3779
+      port: 8080
       name: {{ .Values.appName }}
   selector:
     app: {{ .Values.appName }}
-

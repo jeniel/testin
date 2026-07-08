@@ -1,0 +1,36 @@
+singlenode: true
+appName: atlas-vapt
+
+namespace: atlas-vapt
+
+image:
+  name: acemcbmis/atlas
+  tag: dde2a8f-dev
+
+database:
+  host: 10.104.0.7
+  username: postgres
+  password: af0cfc5db03a
+  database: hismk2-vapt
+
+
+host:
+  name: atlas-vapt.hisd3.tech
+  connect: connect-vapt.hisd3.tech
+
+
+minio:
+  url: s3.acemcbohol.dev
+  accessKey: minioadmin
+  secretKey: UkV6rc79adezx23
+  bucketName: demo
+
+storage:
+  provider: NAS
+
+hospitaltype:
+  isgovernment: false
+
+
+hospitalconfig:
+  alias: "DIANURSE"

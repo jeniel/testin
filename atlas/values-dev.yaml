@@ -1,0 +1,67 @@
+singlenode: true
+appName: atlas-singlenode
+
+namespace: atlas-singlenode
+replicaCount: 2
+
+image:
+  name: acemcbmis/atlas
+  tag: 950584d-dev
+
+database:
+  host: 172.16.10.101
+  username: postgres
+  password: ace123Book
+  port: 5432
+  # port: 6432
+  # username: pgbouncer_pool
+  # password: d9ab8c4e4696
+  database: samch-db-april-7
+  hikari:
+    maximumPoolSize: 40
+    minimumIdle: 20
+
+host:
+  name: atlasdev.acemcbohol.dev
+  connect: connect.acemcbohol.dev
+
+minio:
+  url: s3.acemcbohol.dev
+  accessKey: minioadmin
+  secretKey: UkV6rc79adezx23
+  bucketName: demo
+
+storage:
+  provider: NAS
+
+hospitalconfig:
+  alias: SAMCH
+  isgovernment: true
+  cashiershiftmode: USER
+  coa:
+    version: latest
+
+biometricmiddleware:
+  url: 0.0.0.0
+
+webhook:
+  url: https://hisd3-api-service.acemcbohol.dev
+  app:
+    key: 792bcaae7c1247912a2f3181639a4324
+    secret: 1340d4b9d1405b692a668ba729db655c
+
+notification:
+  provider: mercury
+  mercury:
+    api: https://notif.acemcbohol.dev
+    appKey: 18716a8eea3296897a38f3240320d00a
+    appSecret: 7987a5fc48a3381e8d4f688494a002d3
+  patientCare: https://patient-care.acemcbohol.dev
+  backoffice: https://bo.acemcbohol.dev
+  inventory: https://inventory-v2.acemcbohol.dev
+  fixedAsset: https://fixed-asset.acemcbohol.dev
+  hrPayroll: https://hr.acemcbohol.dev
+
+auth:
+  username: scheduler
+  password: YE%@&j-\\eB\\fv*2Y
