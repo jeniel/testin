@@ -1,0 +1,16 @@
+appName: testin
+replicaCount: 1
+namespace: testin
+image:
+  name: acemcbmis/helpdesk-frontend
+  tag: c999348-prod
+host:
+  #  name: hisbook.bata.local
+  name: helpdesk.ecsgh.local
+onPrem: true
+vite:
+  apiUrl: ""
+  apiUploadingService: ""
+  minioEndpoint: ""
+  hospitalName: "ECSGH"
+  hospitalSubname: ""

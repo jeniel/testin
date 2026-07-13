@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.appName }}-config
+  namespace: {{ .Values.namespace }}
+data:
+  VITE_API_URL: {{ .Values.vite.apiUrl }}
+  VITE_API_UPLOADING_SERVICE: {{ .Values.vite.apiUploadingService }}
+  VITE_MINIO_ENDPOINT: {{ .Values.vite.minioEndpoint }}
+  VITE_HOSPITAL_NAME: {{ .Values.vite.hospitalName }}
+  VITE_HOSPITAL_SUBNAME: {{ .Values.vite.hospitalSubname }}
