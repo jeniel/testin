@@ -1,1 +1,0 @@
-helm template acemc-atlas-prod atlas/ --values atlas/values-prod-acemc.yaml > atlas/output/values-prod-acemc.yaml

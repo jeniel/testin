@@ -1,44 +1,56 @@
 apiVersion: apps/v1
 kind: Deployment
+
 metadata:
-  name: {{ .Values.appName }}
-  namespace: {{ .Values.namespace }}
-  labels:
-    app: {{ .Values.appName }}
+  name: {{ .Release.Name }}
+
 spec:
-  replicas: 1
+  replicas: {{ .Values.replicaCount }}
+
   selector:
     matchLabels:
-      app: {{ .Values.appName }}
+      app: {{ .Release.Name }}
+
   template:
     metadata:
       labels:
-        app: {{ .Values.appName }}
+        app: {{ .Release.Name }}
+
     spec:
-      imagePullSecrets:
-        - name: {{ .Values.appName }}-secret
       containers:
-        - image: "{{ .Values.image.name }}:{{ .Values.image.tag }}"
-          name: {{ .Values.appName }}
-          ports:
-            - containerPort: 4173
-          envFrom:
-            - configMapRef:
-                name: {{ .Values.appName }}-config
+      - name: databasus
+
+        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+
+        imagePullPolicy: {{ .Values.image.pullPolicy }}
+
+        ports:
+        - containerPort: 8080
+
+        volumeMounts:
+        - name: data
+          mountPath: /data
+
+        resources:
+{{ toYaml .Values.resources | indent 10 }}
+
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-data
 ---
 apiVersion: v1
 kind: Service
+
 metadata:
-  name: {{ .Values.appName }}
-  namespace: {{ .Values.namespace }}
-  labels:
-    app: {{ .Values.appName }}
+  name: {{ .Release.Name }}
+
 spec:
-  type: ClusterIP
-  ports:
-    - protocol: TCP
-      port: 4173
-      name: {{ .Values.appName }}
   selector:
-    app: {{ .Values.appName }}
----
+    app: {{ .Release.Name }}
+
+  ports:
+    - port: 8080
+      targetPort: 8080
+
+  type: {{ .Values.service.type }}

@@ -1,16 +1,32 @@
-appName: testin
 replicaCount: 1
-namespace: testin
+
 image:
-  name: jeniel/testindata
-  tag: dc61932-prod
-host:
-  #  name: hisbook.bata.local
-  name: 192.168.1.184.nip.io
-onPrem: true
-vite:
-  apiUrl: ""
-  apiUploadingService: ""
-  minioEndpoint: ""
-  hospitalName: ""
-  hospitalSubname: ""
+  repository: databasus/databasus
+  tag: v3.49.0
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+storage:
+  enabled: true
+  storageClass: microk8s-hostpath     # o microk8s-hostpath
+  size: 5Gi
+
+ingress:
+  enabled: true
+  className: nginx
+
+  host: databasus.bata.local
+
+  tls: false
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+
+  limits:
+    cpu: 1
+    memory: 2Gi
