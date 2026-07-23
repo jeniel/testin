@@ -21,7 +21,7 @@ ingress:
   enabled: true
   className: nginx
 
-  host: testin.192.168.254.104.nip.io
+  host: testin.192.168.254.112.nip.io
 
   tls: false
 
