@@ -18,26 +18,27 @@ spec:
 
     spec:
       containers:
-      - name: databasus
+        - name: databasus
 
-        image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
 
-        imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.targetPort }}
+              protocol: TCP
 
-        ports:
-        - containerPort: 8080
+          volumeMounts:
+            - name: data
+              mountPath: /databasus-data
 
-        volumeMounts:
-        - name: data
-          mountPath: /data
-
-        resources:
-{{ toYaml .Values.resources | indent 10 }}
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
 
       volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: {{ .Release.Name }}-data
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-data
 ---
 apiVersion: v1
 kind: Service
@@ -46,11 +47,13 @@ metadata:
   name: {{ .Release.Name }}
 
 spec:
+  type: {{ .Values.service.type }}
+
   selector:
     app: {{ .Release.Name }}
 
   ports:
-    - port: 8080
-      targetPort: 8080
-
-  type: {{ .Values.service.type }}
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.targetPort }}
+      protocol: TCP
