@@ -1,13 +1,25 @@
+#apiVersion: v1
+##kind: PersistentVolumeClaim
+#metadata:
+#  name: {{ .Release.Name }}-data
+#spec:
+#  accessModes:
+#    - ReadWriteOnce
+
+ # storageClassName: {{ .Values.storage.storageClass }}
+
+ # resources:
+ #   requests:
+ #     storage: {{ .Values.storage.size }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Release.Name }}-data
+  name: testin-data
+  namespace: testin
 spec:
   accessModes:
     - ReadWriteOnce
-
-  storageClassName: {{ .Values.storage.storageClass }}
-
+  storageClassName: microk8s-hostpath
   resources:
     requests:
-      storage: {{ .Values.storage.size }}
+      storage: 10Gi
