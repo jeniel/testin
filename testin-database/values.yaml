@@ -1,17 +1,20 @@
 replicaCount: 1
+
 namespace: testin
+
 image:
   repository: databasus/databasus
-  tag: latest
+  tag: "v3.49.0"
   pullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 4005
+  targetPort: 4005
 
 storage:
   enabled: true
-  storageClass: microk8s-hostpath     # o microk8s-hostpath
+  storageClass: microk8s-hostpath
   size: 5Gi
 
 ingress:
@@ -28,5 +31,5 @@ resources:
     memory: 512Mi
 
   limits:
-    cpu: 1
+    cpu: "1"
     memory: 2Gi
