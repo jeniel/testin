@@ -2,7 +2,7 @@ replicaCount: 1
 namespace: testin
 image:
   repository: databasus/databasus
-  tag: v3.49.0
+  tag: latest
   pullPolicy: IfNotPresent
 
 service:
