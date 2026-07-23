@@ -18,7 +18,7 @@ ingress:
   enabled: true
   className: nginx
 
-  host: databasus.bata.local
+  host: testin.192.168.254.109.nip.io
 
   tls: false
 
