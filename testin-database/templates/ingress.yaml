@@ -7,21 +7,25 @@ metadata:
   name: {{ .Release.Name }}
 
 spec:
-
   ingressClassName: {{ .Values.ingress.className }}
 
   rules:
-  - host: {{ .Values.ingress.host }}
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ .Release.Name }}
+                port:
+                  number: {{ .Values.service.port }}
 
-    http:
-      paths:
-      - path: /
-        pathType: Prefix
-
-        backend:
-          service:
-            name: {{ .Release.Name }}
-            port:
-              number: 8080
+{{- if .Values.ingress.tls }}
+  tls:
+    - hosts:
+        - {{ .Values.ingress.host }}
+      secretName: {{ .Release.Name }}-tls
+{{- end }}
 
 {{- end }}
