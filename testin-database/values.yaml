@@ -1,6 +1,5 @@
 replicaCount: 1
-namespace:
-  testin
+namespace: testin
 image:
   repository: databasus/databasus
   tag: v3.49.0
